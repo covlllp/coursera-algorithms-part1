@@ -17,18 +17,46 @@ struct Graph {
 	Graph() : len(0) {}
 };
 
+void addEdge(Node &node, string node_name);
+void addReverseEdge(Node &node, string node_name);
+void addNodeToGraph(Graph &graph, Node node, int ind);
+void addEdgeToNodeOnGraph(Graph &graph, string node_name, string edge_name);
+void unseeNodes(Graph &graph);
+Graph populate(string fileName);
+
+
+
+int main()
+{
+	cout << "Start populating" << endl;
+
+	Graph graph = populate("test.txt");
+
+	cout << "Done populating, starting first dfs loop" << endl;
+	cout << graph.len << endl;
+
+
+
+	return(0);
+}
+
+
+
+
 void addEdge(Node &node, string node_name) {
+	node.edges.resize(node.edges.size() + 1);
 	node.edges.push_back(node_name);
 }
 
 void addReverseEdge(Node &node, string node_name) {
+	node.reverseEdges.resize(node.reverseEdges.size() + 1);
 	node.reverseEdges.push_back(node_name);
 }
 
 void addNodeToGraph(Graph &graph, Node node, int ind) {
 	graph.len++;
 	if (graph.nodes.capacity() < graph.len) {
-		graph.nodes.resize(graph.len * 10);
+		graph.nodes.resize(graph.len);
 	}
 	Node* pt = &node;
 	graph.nodes.insert(graph.nodes.begin() + ind, pt);
@@ -39,24 +67,22 @@ void addEdgeToNodeOnGraph(Graph &graph, string node_name, string edge_name) {
 	int edge_name_int = stoi(edge_name);
 	int max_ind = max(node_name_int, edge_name_int);
 	if (max_ind > graph.nodes.capacity()) {
-		graph.nodes.resize(max_ind * 10);
+		graph.nodes.resize(max_ind + 1);
 	}
 
 	if (graph.nodes[node_name_int] == 0) {
-		Node node(node_name);
+		Node node = Node(node_name);
 		addNodeToGraph(graph, node, node_name_int);
 	}
-	Node* node_pt = graph.nodes[node_name_int];
-	Node node = *node_pt;
+	Node node = *graph.nodes[node_name_int];
 	addEdge(node, edge_name);
 
 	// add reverse edge
 	if (graph.nodes[edge_name_int] == 0) {
-		Node edge(edge_name);
+		Node edge = Node(edge_name);
 		addNodeToGraph(graph, edge, edge_name_int);
 	}
-	Node* edge_pt = graph.nodes[edge_name_int];
-	Node edge = *edge_pt;
+	Node edge = *graph.nodes[edge_name_int];
 	addReverseEdge(edge, node_name);
 }
 
@@ -68,8 +94,7 @@ void unseeNodes(Graph &graph) {
 }
 
 Graph populate(string fileName) {
-	Graph graph;
-	graph.len;
+	Graph graph = Graph();
 	int lineNum = 1;
 	string str;
 	ifstream infile;
@@ -85,43 +110,4 @@ Graph populate(string fileName) {
 	}
 	infile.close();
 	return graph;
-}
-
-
-int main()
-{
-	// Graph graph;
-	// int x = 5;
-	// Node node("hello");
-	// cout << graph.nodes.capacity() << '\n';
-	// Node* pt = &node;
-	// graph.nodes.resize(x);
-	// graph.nodes.insert(graph.nodes.begin() + x, pt);
-	// nodes.insert(nodes.begin() + x, node);
-
-	// cout << "myvector contains:";
-	// for (int i=0;i<graph.nodes.size();i++)
-	// 	cout << ' ' << graph.nodes[i];
-	// cout << '\n';
-	// pt = graph.nodes[3];
-	// cout << pt;
-	cout << "Start populating" << endl;
-
-	// Graph graph;
-	// Node node("hi");
-	// Node* pt = &node;
-	// graph.nodes.resize(10);
-	// graph.nodes.push_back(pt);
-	// cout << graph.nodes[2] << endl;
-	Graph graph = populate("test.txt");
-
-	cout << "Done populating, starting first dfs loop" << endl;
-	cout << graph.len << endl;
-	// for (var i = 0; i < graph.nodes.length(); i++) {
-	// 	var node = 
-	// }
-
-
-
-	return(0);
 }
