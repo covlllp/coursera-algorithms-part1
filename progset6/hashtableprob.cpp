@@ -43,19 +43,19 @@ int main() {
 	vector<long> set;
 	cout << "populate set and hash" << endl;
 
-	addToBoth(1, hash, set);
-	addToBoth(2, hash, set);
-	addToBoth(3, hash, set);
-	addToBoth(4, hash, set);
+	// addToBoth(1, hash, set);
+	// addToBoth(2, hash, set);
+	// addToBoth(3, hash, set);
+	// addToBoth(4, hash, set);
 
 
 
-	// populate("algo1-programming_prob-2sum.txt", hash, set);
+	populate("algo1-programming_prob-2sum.txt", hash, set);
 
 	cout << "populating done, count pairs" << endl;
 
-	long pairs = hash->CountPairs(set, 0, 10);
-	// long pairs = hash->CountPairs(set, -100000, 100000);
+	// long pairs = hash->CountPairs(set, 4, 6);
+	long pairs = hash->CountPairs(set, -20, 20);
 
 	cout << "counting done, # of pairs is: " << pairs << endl;
 	return (0);
