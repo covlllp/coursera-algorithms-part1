@@ -82,8 +82,8 @@ X = [ones(m, 1) X];
 fprintf('Running gradient descent ...\n');
 
 % Choose some alpha value
-alpha = 0.01;
-num_iters = 400;
+alpha = .1;
+num_iters = 50;
 
 % Init Theta and Run Gradient Descent 
 theta = zeros(3, 1);
@@ -95,6 +95,15 @@ plot(1:numel(J_history), J_history, '-b', 'LineWidth', 2);
 xlabel('Number of iterations');
 ylabel('Cost J');
 
+% New plot
+figure;
+hold on;
+plot(X(:,2), y, 'rx', 'MarkerSize', 10);
+xlabel('Normalized square footage');
+ylabel('Total price');
+plot(X(:,2), X*theta, 'b', 'LineWidth', 2);
+hold off;
+
 % Display gradient descent's result
 fprintf('Theta computed from gradient descent: \n');
 fprintf(' %f \n', theta);
@@ -105,6 +114,11 @@ fprintf('\n');
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
 price = 0; % You should change this
+
+sq_ft = (1650 - mu(1)) / sigma(1);
+rooms = (3 - mu(2)) / sigma(2);
+x_prediction = [1 sq_ft rooms];
+price = x_prediction * theta;
 
 
 % ============================================================
@@ -151,6 +165,7 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 price = 0; % You should change this
 
+price = [1 1650 3] * theta;
 
 % ============================================================
 
