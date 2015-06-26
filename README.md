@@ -1,1 +1,1 @@
-# coursera-algorithms-part1
+# coursera stuff
